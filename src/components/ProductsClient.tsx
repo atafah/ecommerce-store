@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Product } from "@/lib/products";
 import AddToCartButton from "./AddToCartButton";
+import StarRating from "./StarRating";
 
 type Props = {
   products: Product[];
@@ -49,27 +50,47 @@ export default function ProductsClient({ products, categories }: Props) {
       </div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-4 gap-6">
-        {filtered.map((product) => (
-          <div
-            key={product.id}
-            className="border rounded-xl p-4 flex flex-col gap-3 hover:shadow-lg transition-shadow"
+      {filtered.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <div className="text-5xl mb-4">️🛍</div>
+          <h2 className="text-xl font-semibold mb-2">No products found</h2>
+          <p className="text-gray-500 mb-6">
+            There are no products in this category yet.
+          </p>
+          <button
+            onClick={() => setSelected("all")}
+            className="bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800"
           >
-            <Link href={`/products/${product.id}`}>
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-48 object-contain"
+            View All Products
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-6">
+          {filtered.map((product) => (
+            <div
+              key={product.id}
+              className="border rounded-xl p-4 flex flex-col gap-3 hover:shadow-lg transition-shadow"
+            >
+              <Link href={`/products/${product.id}`}>
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full h-48 object-contain"
+                />
+                <h2 className="font-semibold line-clamp-2 mt-3">
+                  {product.title}
+                </h2>
+              </Link>
+              <StarRating
+                rate={product.rating.rate}
+                count={product.rating.count}
               />
-              <h2 className="font-semibold line-clamp-2 mt-3">
-                {product.title}
-              </h2>
-            </Link>
-            <p className="text-gray-500">${product.price}</p>
-            <AddToCartButton product={product} />
-          </div>
-        ))}
-      </div>
+              <p className="text-gray-500">${product.price}</p>
+              <AddToCartButton product={product} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

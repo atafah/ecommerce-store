@@ -1,5 +1,7 @@
 import AddToCartButton from "@/components/AddToCartButton";
+import StarRating from "@/components/StarRating";
 import { Product } from "@/lib/products";
+import Link from "next/link";
 
 export default async function ProductDetailPage({
   params,
@@ -20,6 +22,16 @@ export default async function ProductDetailPage({
 
   return (
     <div className="p-8 max-w-2xl mx-auto">
+      {/*
+      Back Button
+     */}
+      <Link
+        href="/products"
+        className="text-gray-500 hover:text-black flex items-center gap-1 mb-5"
+      >
+        {" "}
+        ← Back to Products
+      </Link>
       <img
         src={product.image}
         alt={product.title}
@@ -30,6 +42,7 @@ export default async function ProductDetailPage({
       <p className="text-gray-500 mb-4">{product.description}</p>
       <p className="text-2xl font-semibold mb-6">${product.price}</p>
       <AddToCartButton product={product} /> {/* <- replace the plain button */}
+      <StarRating rate={product.rating.rate} count={product.rating.count} />
     </div>
   );
 }

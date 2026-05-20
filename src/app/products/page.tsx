@@ -2,10 +2,17 @@ import Link from "next/link";
 import { Product } from "@/lib/products";
 import AddToCartButton from "@/components/AddToCartButton"; // ← import
 import ProductsClient from "@/components/ProductsClient";
+import { cache } from "react";
 
 export default async function ProductsPage() {
-  const res = await fetch("https://fakestoreapi.com/products");
-  const products: Product[] = await res.json();
+  const res = await fetch("https://fakestoreapi.com/products", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) throw new Error("Failed to fetch products");
+  const text = await res.text();
+  if (!text) throw new Error("Empty response");
+  const products: Product[] = JSON.parse(text);
 
   // extract unique categories from the products array
   const categories = [...new Set(products.map((p) => p.category))];

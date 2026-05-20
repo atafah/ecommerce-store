@@ -1,6 +1,7 @@
 import { CartProvider } from "@/context/CartContext";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function RootLayout({
   children,
@@ -13,6 +14,7 @@ export default function RootLayout({
         <CartProvider>
           <Navbar />
           {children}
+          <ScrollToTop />
         </CartProvider>
       </body>
     </html>
