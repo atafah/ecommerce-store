@@ -65,7 +65,7 @@ export default function ProductsClient({ products, categories }: Props) {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filtered.map((product) => (
             <div
               key={product.id}
@@ -73,7 +73,7 @@ export default function ProductsClient({ products, categories }: Props) {
             >
               <Link href={`/products/${product.id}`}>
                 <img
-                  src={product.image}
+                  src={product.thumbnail}
                   alt={product.title}
                   className="w-full h-48 object-contain"
                 />
@@ -81,10 +81,7 @@ export default function ProductsClient({ products, categories }: Props) {
                   {product.title}
                 </h2>
               </Link>
-              <StarRating
-                rate={product.rating.rate}
-                count={product.rating.count}
-              />
+              <StarRating rate={product.rating} />
               <p className="text-gray-500">${product.price}</p>
               <AddToCartButton product={product} />
             </div>
