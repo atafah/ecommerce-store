@@ -9,10 +9,15 @@ import StarRating from "./StarRating";
 type Props = {
   products: Product[];
   categories: string[];
+  initialCategory?: string;
 };
 
-export default function ProductsClient({ products, categories }: Props) {
-  const [selected, setSelected] = useState("all");
+export default function ProductsClient({
+  products,
+  categories,
+  initialCategory,
+}: Props) {
+  const [selected, setSelected] = useState(initialCategory ?? "all");
 
   const filtered =
     selected === "all"

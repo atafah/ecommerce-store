@@ -14,28 +14,39 @@ export default function Home() {
   return (
     <main>
       {/* ==== HERO ==== */}
-      <section className="px-8 py-20 md:py-28 max-w-6xl mx-auto text-center">
-        <p className="text-sm uppercase tracking-widest text-gray-400 mb-4">
+      <section className="px-6 md:px-10 py-24 md:py-36 max-w-5xl mx-auto text-center">
+        <p className="fade-up text-xs uppercase tracking-[0.25em] text-muted mb-6">
           New Season . 2026 Collection
         </p>
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 max-w-3xl mx-auto">
-          Everything you need, all in one store.
+        <h1
+          className="fade-up text-5xl md:text-7xl font-medium tracking-tight mb-8 leading-[1.05]"
+          style={{ animationDelay: "0.1s" }}
+        >
+          Everything you need,
+          <br />
+          <span className="italic text-accent">all in one place.</span>
         </h1>
-        <p className="text-lg text-gray-500 mb-10 max-w-xl mx-auto">
+        <p
+          className="fade-up text-lg text-muted mb-12 max-w-xl mx-auto leading-relaxed"
+          style={{ animationDelay: "0.2s" }}
+        >
           Carefully selected products across electtroniccs, fashion, and jewelry
           - shipped fast and free.
         </p>
 
-        <div className="flex gap-4 justify-center flex-wrap">
+        <div
+          className="fade-up flex gap-4 justify-center flex-wrap"
+          style={{ animationDelay: "0.3s" }}
+        >
           <Link
             href="/products"
-            className="bg-black text-white px-8 py-5 rounded-xl font-medium hover:bg-gray-800 transition-colors"
+            className="bg-foreground text-background px-8 py-4 rounded-full font-medium hover:opacity-90 transition-opacity"
           >
             Shop All Products
           </Link>
           <Link
             href="/products"
-            className="border border-gray-300 px-8 py-4 rounded-xl font-medium hover:border-gray-500 transition-colors"
+            className="border border-border px-8 py-4 rounded-full font-medium hover:border-foreground transition-colors"
           >
             Browse Categories
           </Link>
@@ -43,28 +54,30 @@ export default function Home() {
       </section>
 
       {/* ==== CATEGORY SHORTCUTS ==== */}
-      <section className="px-8 py-12 max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6">Shop by Category</h2>
+      <section className="px-6 md:px-10 py-16 max-w-6xl mx-auto">
+        <h2 className="text-3xl font-medium mb-8">Shop by Category</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {categories.map((category) => (
             <Link
               key={category}
               href={`/products?category=${category}`} // <- include category in URL
-              className="border rounded-xl p-6 text-center capitalize font-medium hover:shadow-lg hover:border-black transition-all"
+              className="group border border-border rounded-2xl p-8 text-center capitalize font-medium bg-card hover:border-foreground transition-all hover:-translate-y-1"
             >
-              {category}
+              <span className="group-hover:text-accent transition-colors">
+                {category}
+              </span>
             </Link>
           ))}
         </div>
       </section>
 
       {/* ==== FEATURED PRODUCTS ==== */}
-      <section className="px-8 py-12 max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Featured Products</h2>
+      <section className="px-6 md:px-10 py-16 max-w-6xl mx-auto">
+        <div className="flex justify-between items-end mb-8">
+          <h2 className="text-3xl font-medium">Featured Products</h2>
           <Link
             href="/products"
-            className="text-gray-500 hover:text-black transition-colors"
+            className="text-sm text-muted hover:text-accent transition-colors"
           >
             View all →
           </Link>
@@ -74,23 +87,28 @@ export default function Home() {
             <Link
               key={product.id}
               href={`/products/${product.id}`}
-              className="border rounded-xl p-4 flex flex-col gap-3 hover:shadow-lg transition-shadow"
+              className="group bg-card border border-border rounded-2xl p-5 flex flex-col gap-3 hover:shadow-[0_12px_40px_rgba(0,0,0,0.8)] transition-all duration-300"
             >
-              <img
-                src={product.thumbnail}
-                alt={product.title}
-                className="w-full h-48 object-contain"
-              />
-              <h3 className="font-semibold line-clamp-2">{product.title}</h3>
+              <div className="overflow-hidden rounded-xl">
+                <img
+                  src={product.thumbnail}
+                  alt={product.title}
+                  className="w-full h-48 object-contain group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 className="font-medium text-base line-clamp-2 leading-snug">
+                {product.title}
+              </h3>
               <StarRating rate={product.rating} />
-              <p className="text-gray-500 mt-auto">${product.price}</p>
+              <p className="text-muted mt-auto font-medium">${product.price}</p>
             </Link>
           ))}
         </div>
       </section>
 
       {/* ==== FOOTER ==== */}
-      <footer className="border-t mt-12 px-8 py-10 text-center text-gray-400 text-sm">
+      <footer className="border-t border-border mt-16 px-6 md:px-10 py012 text-center text-muted text-sm">
+        <p className="text-xl font-medium text-foreground mb-2">CASATARA</p>
         <p>© 2026 My Store. Built with Next.js.</p>
       </footer>
     </main>
