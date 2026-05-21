@@ -1,47 +1,39 @@
-import Link from "next/link";
 import { Product } from "@/lib/products";
-import AddToCartButton from "@/components/AddToCartButton"; // ← import
 import ProductsClient from "@/components/ProductsClient";
-import { cache } from "react";
+
+async function getProducts(): Promise<Product[]> {
+  // try up to 3 times in case the API is flaky
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await fetch("https://fakestoreapi.com/products", {
+        cache: "no-store",
+        signal: AbortSignal.timeout(8000), // give up after 8 seconds
+      });
+
+      if (!res.ok) throw new Error(`API responded with ${res.status}`);
+
+      const text = await res.text();
+      if (!text) throw new Error("Empty response body");
+
+      return JSON.parse(text);
+    } catch (err) {
+      console.error(`Fetch attempt ${attempt} failed:`, err);
+      if (attempt === 3) throw err; // out of retries, give up
+      await new Promise((r) => setTimeout(r, 1000)); // wait 1s before retry
+    }
+  }
+  return []; // unreachable, but satisfies TypeScript
+}
 
 export default async function ProductsPage() {
-  const res = await fetch("https://fakestoreapi.com/products", {
-    cache: "no-store",
-  });
+  const products = await getProducts();
 
-  if (!res.ok) throw new Error("Failed to fetch products");
-  const text = await res.text();
-  if (!text) throw new Error("Empty response");
-  const products: Product[] = JSON.parse(text);
-
-  // extract unique categories from the products array
   const categories = [...new Set(products.map((p) => p.category))];
 
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-6">Products</h1>
       <ProductsClient products={products} categories={categories} />
-      {/*
-      <div className="grid grid-cols-4 gap-6">
-        {products.map((product) => (
-          <div
-            key={product.id}
-            className="border rounded-xl p-4 flex flex-col gap-3 hover:shadow-lg transition-shadow"
-          >
-            <Link href={`/products/${product.id}`}>
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-48 object-contain"
-              />
-              <h2 className="font-semibold line-clamp-2">{product.title}</h2>
-            </Link>
-            <p className="text-gray-500">${product.price}</p>
-            <AddToCartButton product={product} />
-          </div>
-        ))}
-      </div>
-      */}
     </div>
   );
 }
