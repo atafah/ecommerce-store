@@ -13,12 +13,8 @@ export default function StarRating({ rate, count }: Props) {
         return (
           <span
             key={star}
-            className={`text-lg ${
-              filled
-                ? "text-yellow-400"
-                : half
-                  ? "text-yellow-300"
-                  : "text-gray-300"
+            className={`text-sm ${
+              filled || half ? "text-amber-500" : "text-border"
             }`}
           >
             {filled ? "★" : half ? "★" : "☆"}
@@ -26,9 +22,10 @@ export default function StarRating({ rate, count }: Props) {
         );
       })}
 
-      {count !== undefined && (
-        <span className="text-sm text-gray-400 ml-1">({count})</span>
-      )}
+      <span className="text-xs text-muted ml-1">
+        {rate.toFixed(1)}
+        {count !== undefined && ` (${count})`}
+      </span>
     </div>
   );
 }

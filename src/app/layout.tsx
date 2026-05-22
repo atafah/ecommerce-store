@@ -17,9 +17,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "My Store - Everything you need, all in one place",
+  title: "My Store — Everything you need, all in one place",
   description:
-    "Carefully selected products across electronics, fashion, and jewelry. Shipped fash and free.",
+    "Carefully selected products across electronics, fashion, and jewelry. Shipped fast and free.",
 };
 
 export default function RootLayout({

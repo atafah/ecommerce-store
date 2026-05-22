@@ -15,7 +15,7 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
-  --color-car: var(--card);
+  --color-card: var(--card);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
 }
@@ -43,7 +43,7 @@ h3 {
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #ecebe8 25%, #f7f6f4 50% #ecebe8 75%);
+  background: linear-gradient(90deg, #ecebe8 25%, #f7f6f4 50%, #ecebe8 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
 }

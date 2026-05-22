@@ -7,13 +7,11 @@ export default async function ProductsPage({
   searchParams: Promise<{ category?: string }>;
 }) {
   const { category } = await searchParams;
-
-  // data is bundled with the app — always available, instant, never blocked
   const categories = [...new Set(products.map((p) => p.category))];
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Products</h1>
+    <div className="px-6 md:px-10 py-12 max-w-6xl mx-auto">
+      <h1 className="text-4xl font-medium mb-8">Products</h1>
       <ProductsClient
         products={products}
         categories={categories}

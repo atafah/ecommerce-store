@@ -9,10 +9,10 @@ export default function AddToCartButton({ product }: { product: Product }) {
   return (
     <button
       onClick={(e) => {
-        e.stopPropagation(); // ← this must be here
+        e.stopPropagation();
         addToCart(product);
       }}
-      className="mt-auto bg-black text-white py-2 rounded-lg hover:bg-gray-800 w-full"
+      className="mt-auto bg-foreground text-background py-3 rounded-full w-full font-medium hover:opacity-90 transition-opacity"
     >
       Add to Cart
     </button>

@@ -24,30 +24,29 @@ export default function ProductsClient({
       ? products
       : products.filter((p) => p.category === selected);
 
+  // shared classes for the filter pills
+  const pill = (isActive: boolean) =>
+    `px-5 py-2 rounded-full border text-sm capitalize transition-all ${
+      isActive
+        ? "bg-foreground text-background border-foreground"
+        : "bg-card text-muted border-border hover:border-foreground hover:text-foreground"
+    }`;
+
   return (
     <div>
-      {/* Filter Buttons */}
-      <div className="flex gap-3 flex-wrap mb-8">
+      {/* Filter Pills */}
+      <div className="flex gap-3 flex-wrap mb-10">
         <button
           onClick={() => setSelected("all")}
-          className={`px-4 py-2 rounded-full border transition-colors ${
-            selected === "all"
-              ? "bg-black text-white border-black"
-              : "bg-white text-gray-600 hover:border-gray-400"
-          }`}
+          className={pill(selected === "all")}
         >
           All
         </button>
-
         {categories.map((category) => (
           <button
             key={category}
             onClick={() => setSelected(category)}
-            className={`px-4 py-2 rounded-full border capitalize transition-colors ${
-              selected === category
-                ? "bg-black text-white border-black"
-                : "bg-white text-gray-600 hover:border-gray-400"
-            }`}
+            className={pill(selected === category)}
           >
             {category}
           </button>
@@ -57,14 +56,14 @@ export default function ProductsClient({
       {/* Products Grid */}
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 text-center">
-          <div className="text-5xl mb-4">️🛍</div>
-          <h2 className="text-xl font-semibold mb-2">No products found</h2>
-          <p className="text-gray-500 mb-6">
+          <div className="text-5xl mb-4">🛍️</div>
+          <h2 className="text-xl font-medium mb-2">No products found</h2>
+          <p className="text-muted mb-6">
             There are no products in this category yet.
           </p>
           <button
             onClick={() => setSelected("all")}
-            className="bg-black text-white px-6 py-3 rounded-xl hover:bg-gray-800"
+            className="bg-foreground text-background px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
           >
             View All Products
           </button>
@@ -74,20 +73,22 @@ export default function ProductsClient({
           {filtered.map((product) => (
             <div
               key={product.id}
-              className="border rounded-xl p-4 flex flex-col gap-3 hover:shadow-lg transition-shadow"
+              className="group bg-card border border-border rounded-2xl p-5 flex flex-col gap-3 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-300"
             >
               <Link href={`/products/${product.id}`}>
-                <img
-                  src={product.thumbnail}
-                  alt={product.title}
-                  className="w-full h-48 object-contain"
-                />
-                <h2 className="font-semibold line-clamp-2 mt-3">
+                <div className="overflow-hidden rounded-xl">
+                  <img
+                    src={product.thumbnail}
+                    alt={product.title}
+                    className="w-full h-48 object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <h2 className="font-medium line-clamp-2 mt-4 leading-snug">
                   {product.title}
                 </h2>
               </Link>
               <StarRating rate={product.rating} />
-              <p className="text-gray-500">${product.price}</p>
+              <p className="text-muted font-medium">${product.price}</p>
               <AddToCartButton product={product} />
             </div>
           ))}
